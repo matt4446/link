@@ -99,6 +99,7 @@
     height: 65px;
     border-radius: 3px;
     float: right;
+    display: block;
   }
 
   &__title {
