@@ -282,10 +282,21 @@ export default class LinkTool {
    * Compose link preview from fetched data
    * @param {metaData} meta - link meta data
    */
-  showLinkPreview({ image, title, description }) {
+  showLinkPreview({ image, imageUrl, title, description }) {
     this.nodes.container.appendChild(this.nodes.linkContent);
 
-    if (image && image.url) {
+    /*
+     * "{"id":0,
+     * "url":"https://www.bbc.co.uk/news/uk-51526879",
+     * "title":"Flood threat remains after Storm Dennis batters UK",
+     * "imageUrl":"https://ichef.bbci.co.uk/news/1024/branded_news/0688/production/_110927610_mediaitem110927609.jpg",
+     * "imageWidth":null,
+     * "imageHeight":null,
+     * "description":"Communities across Britain are facing another day of flooding and travel chaos, following the torrential rain brought by Storm Dennis. More than 300 flood warnings are still in place across the UK, including eight severe warnings in England. Thousands of sandbags have been placed around vulnerable properties in York as the River Ouse continues to rise.",
+     * "mediaHtml":null,"icon":null,"contentType":null}"
+     */
+
+    if (imageUrl) {
       this.nodes.linkImage.style.backgroundImage = 'url(' + image.url + ')';
       this.nodes.linkContent.appendChild(this.nodes.linkImage);
     }
@@ -347,11 +358,9 @@ export default class LinkTool {
     this.data = { link: url };
 
     try {
-      const response = await (ajax.get({
+      const response = await (ajax.post({
         url: this.config.endpoint,
-        data: {
-          url
-        }
+        data: url
       }));
 
       this.onFetch(response);
@@ -408,7 +417,7 @@ export default class LinkTool {
    * @return {HTMLElement}
    */
   make(tagName, classNames = null, attributes = {}) {
-    let el = document.createElement(tagName);
+    const el = document.createElement(tagName);
 
     if (Array.isArray(classNames)) {
       el.classList.add(...classNames);
@@ -416,7 +425,7 @@ export default class LinkTool {
       el.classList.add(classNames);
     }
 
-    for (let attrName in attributes) {
+    for (const attrName in attributes) {
       el[attrName] = attributes[attrName];
     }
 
