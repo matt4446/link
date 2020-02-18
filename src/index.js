@@ -297,7 +297,7 @@ export default class LinkTool {
      */
 
     if (imageUrl) {
-      this.nodes.linkImage.style.backgroundImage = 'url(' + image.url + ')';
+      this.nodes.linkImage.style.backgroundImage = 'url(' + imageUrl + ')';
       this.nodes.linkContent.appendChild(this.nodes.linkImage);
     }
 
