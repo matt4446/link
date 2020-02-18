@@ -374,12 +374,12 @@ export default class LinkTool {
    * @param {UploadResponseFormat} response
    */
   onFetch(response) {
-    if (!response || !response.success) {
+    if (!response) {
       this.fetchingFailed('Can not get this link data, try another');
       return;
     }
 
-    const metaData = response.meta;
+    const metaData = response;
 
     this.data = { meta: metaData };
 
